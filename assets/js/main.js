@@ -1,39 +1,47 @@
-const offset = 0
+const pokemonList = document.getElementById('pokemonList') //Pegando a lista OL HTML
+const loadMoreButton = document.getElementById('loadMoreButton')
 const limit = 10
-const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+let offset = 0;
+const maxRecords = 386
 
 
-function convertPokemonToLi(pokemon) {  //
-    return `
-    <li class="pokemon">
-                <span class="number">#001</span>
-                <span class="name">${pokemon.name}</span>
-                
-                <div class="detail">
-                    <ol class="types">
-                        <li class="type">Grass</li>
-                        <li class="type">Poison</li>
-                    </ol>
-
-                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg"
-                    alt="${pokemon.name}">
-                </div>
-            </li>
-            `
+function loadPokemonItems(offset, limit) {
+    pokeApi.getPokemons(offset, limit).then((pokemons = []) => { //Pega a lista de pokemons, mapeia eles, ou seja converte para uma lista Li, depois disso junta todos eles (join('') sem separador nenum, por isso a string vazia
+        const newHtml = pokemons.map((pokemon) =>
+            `<li class="pokemon ${pokemon.type}">
+                    <span class="number">${pokemon.number}</span>
+                    <span class="name">${pokemon.name}</span>
+                    
+                    <div class="detail">
+                        <ol class="types">
+                            ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
+                        </ol>
+    
+                        <img src="${pokemon.photo}"
+                        alt="${pokemon.name}">
+                    </div>
+                </li>
+                `
+        ).join('')
+        pokemonList.innerHTML += newHtml
+    })
 }
 
-const pokemonList = document.getElementById('pokemonList') //Pegando a lista OL HTML
+loadPokemonItems(offset, limit)
 
-fetch(url) //Requisição HTTP pra buscar os pokemons
-    .then((response) => response.json()) //transforma o arquivo em json
-    .then((jsonBody) => jsonBody.results)
-    .then((pokemons) => { //com o resultado dos pokemons, necessario converte esta estrutura pokemon em um estrutula Li
-        
-        for (let i = 0; i < pokemons.length; i++ ){
-            const pokemon = pokemons[i];
-            pokemonList.innerHTML += convertPokemonToLi(pokemon) // Pra cada pokemon, concatena na pokemon list, que é o n HTML 
-            
-        }
-    })
-    .catch((error) => console.log(error))
+loadMoreButton.addEventListener('click', () => {
+    offset += limit
+    const qtdRecordNextPage = offset + limit
+
+    if (qtdRecordNextPage >= maxRecords) {
+        const newLimit = maxRecords - offset
+    loadPokemonItems(offset, newLimit)
+    
+    loadMoreButton.parentElement.removeChild(loadMoreButton)
+
+    }else {
+    loadPokemonItems(offset, limit)
+    }
+})
+
 

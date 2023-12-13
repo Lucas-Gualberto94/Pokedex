@@ -9,11 +9,9 @@ body{
 
 .content {
     height: 100vh;
-    width: 100vh;
+    width: 100vw;
     padding: 1rem;
     background-color: #fff;
-    height: 100vh;
-    width: 100vh;
 }
 
 @media screen and (min-width: 992px) {
