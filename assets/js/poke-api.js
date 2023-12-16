@@ -1,6 +1,7 @@
 
-
 const pokeApi = {}
+const infoModal = {}
+
 
 function convertPokeApiDetailToPokemon(pokeDetail){
     const pokemon = new Pokemon()
@@ -18,6 +19,7 @@ function convertPokeApiDetailToPokemon(pokeDetail){
     return pokemon
 
 }
+
 
 pokeApi.getPokemonDetail = (pokemon) => {
     return fetch(pokemon.url)
