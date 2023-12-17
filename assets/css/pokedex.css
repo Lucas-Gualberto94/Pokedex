@@ -97,7 +97,6 @@
 }
 
 .pokemon .detail .types .type {
-    color: #fff;
     padding: .25rem .5rem;
     margin: .25rem 0;
     font-size: .625rem;
@@ -131,8 +130,6 @@
 
 }
 
-
-
   
  /* Estilos para o Modal */
  .modal {
@@ -148,27 +145,30 @@
 }
 
 .modal-content {
-    background-color: #fff;
     margin: 5% auto;
     padding: 20px;
     border: 1px solid #ccc;
     width: 80%;
     max-width: 600px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }       
-  
+
+#modalTitle {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#modalTitle span {
+    color: #6f38f6;
+    text-transform: capitalize;
+}
+
 
 #modalImage {
     max-width: 100%;
-    height: auto;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-}
-
-#modalTitle {
-    font-size: 24px;
-    margin-bottom: 10px;
+    height: 10rem;
+    margin: auto;
+    display: block;
 }
 
 #modalHeight,
@@ -189,6 +189,9 @@
     .pokemons {
         grid-template-columns: 1fr 1fr; /* divide o grip em duas colunas e atribui 1fr para cada coluna */   
     }
+
+    #modalImage {
+        height: 15rem;
   }
 
 
@@ -205,6 +208,6 @@
   }
 
   
-
+}
 
 

@@ -6,8 +6,7 @@ const maxRecords = 386
 const modal = document.getElementById('myModal')
 
 
-
-
+// função para criar a lista dinamica de pokemon, ao clicar na lista cria um modal e carrega as informações do pokemon selecionado
 function loadPokemonItems(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => { //Pega a lista de pokemons, mapeia eles, ou seja converte para uma lista Li, depois disso junta todos eles (join('') sem separador nenum, por isso a string vazia
         const newHtml = pokemons.map((pokemon) =>
@@ -28,6 +27,7 @@ function loadPokemonItems(offset, limit) {
         ).join('')
         pokemonList.innerHTML += newHtml
 
+        // adicionando eventListener para cada Li da lista, ao clicar abre o modal, pega a URL correspondende e faz uma requisição para pegar as info do pokemon selecionado
         const newPokemonItems = document.querySelectorAll('.pokemon');
         newPokemonItems.forEach((item) => {
             item.addEventListener('click', function (event) {
@@ -37,37 +37,49 @@ function loadPokemonItems(offset, limit) {
                 fetch(idClicadoUrl)
                     .then(response => response.json())
                     .then(data => {
-                        const pokemonData = new PokemonInfo(
+                        const firstType = data.types.length > 0 ? data.types[0].type.name : 'Desconhecido';
+                        const pokemonInfo = new PokemonInfo(
                             data.species.name, 
                             data.height, 
                             data.weight,
                             data.sprites.front_default,
-                            data.stats
+                            data.stats,
+                            data.types,
+                            firstType
                         );
-                        fillModalContent(pokemonData);
+                        console.log('Informações detalhadas do Pokémon:', pokemonInfo);
+                        console.log(firstType)
+                        fillModalContent(pokemonInfo);
                     })
             });
         });
     })
 }
 
-function fillModalContent(pokemonData) {
-    document.getElementById('modalTitle').innerText = `Informações do Pokémon ${pokemonData.species}`;
-    document.getElementById('modalHeight').innerText = `Altura: ${pokemonData.height / 10}m`;
-    document.getElementById('modalWeight').innerText = `Peso: ${pokemonData.weight / 10}kg`;
+// função para preencher dinamicamente o modal
+function fillModalContent(pokemonInfo) {
+
+    document.getElementsByClassName('modal-content')[0].className += ' ' + pokemonInfo.firstType
+ 
+    document.getElementById('modalTitle').innerHTML = `Informações do Pokémon <span>${pokemonInfo.species}</span>`;
+    document.getElementById('modalHeight').innerText = `Altura: ${pokemonInfo.height / 10}m`;
+    document.getElementById('modalWeight').innerText = `Peso: ${pokemonInfo.weight / 10}kg`;
 
     const modalImage = document.getElementById('modalImage');
-    modalImage.src = pokemonData.photo;
-    modalImage.alt = pokemonData.name;
+    modalImage.src = pokemonInfo.photo;
+    modalImage.alt = pokemonInfo.name;
 
     const modalStats = document.getElementById('modalStats');
     modalStats.innerHTML = '<h3>Estatísticas Base:</h3>';
 
-    pokemonData.stats.forEach(stat => {
+    pokemonInfo.stats.forEach(stat => {
         modalStats.innerHTML += `<p data-stat="${stat.stat.name.toLowerCase()}">${stat.stat.name}: ${stat.base_stat}</p>`;
     });
+
 }
 
+
+// para fechar o modal
 function closePokemonModal() {
     modal.style.display = 'none';
   }
@@ -82,7 +94,7 @@ window.addEventListener('click', function(event) {
 
 
 
-
+// função para carregar mais pokemons na tela ao clicar no botão load more
 loadPokemonItems(offset, limit)
 
 loadMoreButton.addEventListener('click', () => {

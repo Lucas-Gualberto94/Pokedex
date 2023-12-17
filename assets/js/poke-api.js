@@ -3,6 +3,8 @@ const pokeApi = {}
 const infoModal = {}
 
 
+
+
 function convertPokeApiDetailToPokemon(pokeDetail){
     const pokemon = new Pokemon()
     pokemon.number = pokeDetail.id
@@ -21,12 +23,15 @@ function convertPokeApiDetailToPokemon(pokeDetail){
 }
 
 
+
 pokeApi.getPokemonDetail = (pokemon) => {
     return fetch(pokemon.url)
         .then((response) => response.json())
         .then(convertPokeApiDetailToPokemon)
 }
 
+
+// metodo pata fazer a requisação para poder c riar a lista de pokemons
 pokeApi.getPokemons = (offset = 0, limit = 5) => { //vai retornar toda a nossa manipulaçao do Fetch, obs: quando default (=0) no paramentro, se ninguem passar nada ele assume esse valor
     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
     return fetch(url) //Requisição HTTP pra buscar os pokemons
