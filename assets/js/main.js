@@ -1,6 +1,6 @@
 var pokemonList = document.getElementById('pokemonList') //Pegando a lista OL HTML
 const loadMoreButton = document.getElementById('loadMoreButton')
-const limit = 5
+const limit = 4
 let offset = 0;
 const maxRecords = 386
 const modal = document.getElementById('myModal')
@@ -47,8 +47,6 @@ function loadPokemonItems(offset, limit) {
                             data.types,
                             firstType
                         );
-                        console.log('Informações detalhadas do Pokémon:', pokemonInfo);
-                        console.log(firstType)
                         fillModalContent(pokemonInfo);
                     })
             });
@@ -58,7 +56,8 @@ function loadPokemonItems(offset, limit) {
 
 // função para preencher dinamicamente o modal
 function fillModalContent(pokemonInfo) {
-
+    const modalContent = document.getElementsByClassName('modal-content')[0];
+    modalContent.className = 'modal-content';
     document.getElementsByClassName('modal-content')[0].className += ' ' + pokemonInfo.firstType
  
     document.getElementById('modalTitle').innerHTML = `Informações do Pokémon <span>${pokemonInfo.species}</span>`;
