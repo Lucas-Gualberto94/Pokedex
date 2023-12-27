@@ -21,6 +21,8 @@ Since this is an example project, I´d encourage you to clone and rename this pr
 
 - [Pokeapi] (https://pokeapi.co/)
 
+-[Working pokedex] (https://lucas-gualberto94.github.io/Pokedex/)
+
 ## Find a bug?
 If you found an issue or would like to submit an improvement to this project, please submit an issue using the issue tab above. If you would like to submit a PR with a fix, reference the issue you created! 
 
