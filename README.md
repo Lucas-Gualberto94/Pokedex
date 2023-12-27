@@ -3,7 +3,7 @@
 
 ## A fully functional EXAMPLE project written in JavaScript showing how to consume an API via fetch
 
-This project is an example that was built along with an Bootcamp offered by digital innovation one (DIO) showing how to create a Pokedex by consuming pokeApi by fetch API. Every part of this project is sample code which shows how to do the following:
+This project is an example that was built along with a Bootcamp offered by digital innovation one (DIO) showing how to create a Pokedex by consuming pokeApi by fetch API. Every part of this project is sample code which shows how to do the following:
 
     * create an HTTP request via fetch API
     * consume the HTTP request with JavaScript functions
